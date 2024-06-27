@@ -20,7 +20,7 @@ class Preprocessor(L.LightningDataModule):
         self.tokenizer = AutoTokenizer.from_pretrained("indolem/indobert-base-uncased")
         self.batch_size = batch_size
         
-        self.kaggle_folder = "ferdi_indo_hoax"
+        self.kaggle_folder = "hoax_detection_model"
         
     def load_data(self):
         dataset = pd.read_csv(f"{self.kaggle_folder}/datasets/turnbackhoax_data.csv")

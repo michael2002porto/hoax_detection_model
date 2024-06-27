@@ -1,1 +1,1 @@
-# ferdi_indo_hoax
+# hoax_detection_model
