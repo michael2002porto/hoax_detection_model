@@ -14,7 +14,7 @@ if __name__ == "__main__":
     model = HoaxDetectionModel(model_id = "indolem/indobert-base-uncased")
     
     trainer = L.Trainer(
-        accelerator = 'cpu',
+        accelerator = 'gpu',
         max_epochs = 1,
         default_root_dir = 'logs/indobert'
     )
