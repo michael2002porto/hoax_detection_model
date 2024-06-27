@@ -15,7 +15,7 @@ if __name__ == "__main__":
     
     trainer = L.Trainer(
         accelerator = 'gpu',
-        max_epochs = 1,
+        max_epochs = 10,
         default_root_dir = 'logs/indobert'
     )
     
@@ -23,6 +23,8 @@ if __name__ == "__main__":
     trainer.fit(model, datamodule = dm)
 
     # Testing model
-    # trainer.test(datamodule = dm, ckpt_path = 'best')
-    trainer.test(model=model, datamodule=dm, ckpt_path='best')
+    trainer.test(datamodule = dm, ckpt_path = 'best')
+
+    # sama saja dengan trainer.test(datamodule = dm, ckpt_path = 'best')
+    # trainer.test(model=model, datamodule=dm, ckpt_path='best')
     
