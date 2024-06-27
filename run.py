@@ -21,8 +21,8 @@ if __name__ == "__main__":
     
     # Ini bagian training 
     trainer.fit(model, datamodule = dm)
-    
+
     # Testing model
     # trainer.test(datamodule = dm, ckpt_path = 'best')
-    trainer.test(model=model, datamodule=data_module, ckpt_path='best')
+    trainer.test(model=model, datamodule=dm, ckpt_path='best')
     
