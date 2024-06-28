@@ -53,16 +53,16 @@ class HoaxDetectionModel(L.LightningModule):
         # layer 12
         
         # dimensi pooler output = 1 * 768
-        lm_out = lm_out.pooler_output
-        out = self.dropout(lm_out)
+        lm_out = lm_out.pooler_output   #ambil output layer terakhir
+        out = self.dropout(lm_out)  #menghilangkan memory
         
         # Tersimpan di memori khusus hoax detection
-        out = self.pre_classifier(out)
+        out = self.pre_classifier(out)     #pindah ke memori khusus klasifikasi
         
         # 0.02312312412413131 -> 0.023412 (normalisasi) -> 0 -> 1
         # -0.3124211 -> 0.00012
         out = self.output_layer(out)
-        out = self.softmax(out)
+        out = self.softmax(out)     #menstabilkan sehingga 0 - 1
         return out
                 
     def prepare_metrics(self):
@@ -123,11 +123,12 @@ class HoaxDetectionModel(L.LightningModule):
     def training_step(self, batch, batch_idx):
         x_ids, x_att, y = batch
         
+        #masuk ke forward()
         y_pred = self(x_ids = x_ids, x_att = x_att)
         
-        loss = self.loss_function(y_pred, target = y.float())
+        loss = self.loss_function(y_pred, target = y.float())   #y_pred semakin salah, maka semakin tinggi loss
         
-        metrics = self.benchmarking_step(pred = y_pred, target = y)
+        metrics = self.benchmarking_step(pred = y_pred, target = y)     #tahu skor
         metrics["loss"] = loss
         
         self.training_step_output.append(metrics)

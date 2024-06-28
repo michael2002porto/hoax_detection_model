@@ -61,11 +61,20 @@ class Preprocessor(L.LightningDataModule):
                     truncation = True,
                     padding = "max_length",
                 )
-                
+                #input_ids = 3,1,5,0,0
+                #attention_mask = 1,1,1,0,0
                 x_ids.append(narasi_tok["input_ids"])
                 x_att.append(narasi_tok["attention_mask"])
                 y.append([1,0])
                 
+# anak2 = 0
+# remaja = 1
+# dewasa = 2
+# semua umur = 3
+
+# y dewasa
+# y.append([0,0,1,0])
+
                 counter_tok = self.tokenizer(
                     counter,
                     max_length = 200,
@@ -85,10 +94,10 @@ class Preprocessor(L.LightningDataModule):
             
             # Ratio Training 80% overall data = (90% Train, 10 Validation)
             
-            train_val_len = int(x_ids.shape[0] * 0.8)
-            train_len = int(train_val_len * 0.9)
-            val_len = train_val_len - train_len
-            test_len = x_ids.shape[0] - train_val_len
+            train_val_len = int(x_ids.shape[0] * 0.8)   #100 * 0.8 = 80
+            train_len = int(train_val_len * 0.9)    #80 * 0.9 = 72
+            val_len = train_val_len - train_len #80 - 72 = 8
+            test_len = x_ids.shape[0] - train_val_len   #100 - 80 = 20
             
             all_data = TensorDataset(x_ids, x_att, y)
             train_set, val_set, test_set = torch.utils.data.random_split(all_data, [train_len, val_len, test_len])
